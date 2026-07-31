@@ -736,15 +736,15 @@ nav ul {
 }
 
 .pair-of-photos:nth-of-type(1) .described-photo:nth-child(2) {
-  --gallery-reveal-delay: 0.5s;
+  --gallery-reveal-delay: 0.3s;
 }
 
 .pair-of-photos:nth-of-type(2) .described-photo:nth-child(1) {
-  --gallery-reveal-delay: 1s;
+  --gallery-reveal-delay: 0.6s;
 }
 
 .pair-of-photos:nth-of-type(2) .described-photo:nth-child(2) {
-  --gallery-reveal-delay: 1.5s;
+  --gallery-reveal-delay: 0.9s;
 }
 
 .described-photo.reveal-up.visible {
@@ -1259,18 +1259,33 @@ footer {
 
 .product-shadow {
   position: absolute;
-  left: 0;
-  bottom: -47%;
-  height: 100%;
-  width: 100%;
+  /* left: 0; */
+  bottom: -1rem;
+  height: 2.6rem;
+  width: 5.2rem;
   z-index: 2;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.075) 0%, transparent 50%);
+  /* background: radial-gradient(circle, rgba(0, 0, 0, 0.075) 0%, transparent 50%); */
   /* background: radial-gradient(circle, red 0%, transparent 50%); */
-  transform: rotateX(75deg) scale(0.4);
+  clip-path: none;
+  overflow: visible;
+  background: none;
+  pointer-events: none;
+  /* transform: rotateX(75deg) scale(0.4); */
+  transform: scale(1);
+  /* transform: rotateX(75deg) scale(1); */
 
-  /* border: solid blue; */
+  /* border: solid red; */
 
   transition: transform 0.5s ease;
+}
+
+.product-shadow::before {
+  content: "";
+  position: absolute;
+  inset: 30% 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.075);
+  filter: blur(4px);
 }
 
 .product>* {
@@ -1289,11 +1304,15 @@ footer {
 .product-image {
   display: block;
   margin-inline: auto;
-  max-width: 100%;
-  height: clamp(14rem, 34vw, 18.75rem);
+  /* max-width: 100%;
+  height: clamp(14rem, 34vw, 18.75rem); */
+  max-height: 100%;
+  width: 5rem;
   object-fit: contain;
   transform: translateY(0);
   transition: transform 0.5s ease;
+
+  /* border: solid blue; */
 }
 
 .product:hover .product-image {
@@ -1301,7 +1320,8 @@ footer {
 }
 
 .product:hover .product-shadow {
-  transform: rotateX(75deg) scale(0.43);
+  /* transform: rotateX(75deg) scale(0.43); */
+  transform: scale(1.125);
 }
 
 .product-title {
@@ -1383,7 +1403,7 @@ footer {
   margin: 0;
   border: none;
 
-  /* border: solid yellow; */
+  /* border: solid violet; */
 
   /* transform: translateY(0);
   transition: transform 0.5s ease; */
@@ -1402,8 +1422,10 @@ footer {
 
 .product-page-content .product-visual img {
   position: relative;
-  max-width: 100%;
-  height: clamp(18rem, 34vw, 28rem);
+  /* max-width: 100%;
+  height: clamp(18rem, 34vw, 28rem); */
+  max-height: 100%;
+  width: 7rem;
   object-fit: contain;
   margin: 0;
 
@@ -1413,13 +1435,33 @@ footer {
   /* transition: transform 1s ease; */
 }
 
+/* .product-shadow {
+  position: absolute;
+  bottom: -0.9rem;
+  height: 2.6rem;
+  width: 5.2rem;
+  z-index: 2;
+  clip-path: ellipse(50% 18%);
+  background-color: rgba(0, 0, 0, 0.075);
+  transform: scale(1);
+
+  border: solid red;
+
+  transition: transform 0.5s ease;
+} */
+
 .product-visual .product-shadow {
+  /* clip-path: ellipse(27% 3%); */
+  bottom: -1.6rem;
+  height: 4rem;
+  width: 8rem;
   animation-name: shadowAnimation;
   animation-duration: 1.5s;
-  transform: rotateX(75deg) scale(0.67);
+  transform: scale(1);
+  /* transform: rotateX(75deg) scale(0.67); */
+  /* transform: rotateX(75deg) scale(1); */
   /* background: radial-gradient(circle, red 0%, transparent 50%); */
   /* border: solid blue; */
-
   /* transform: rotateX(75deg) scale(0.57); */
 }
 
@@ -1440,11 +1482,13 @@ footer {
 
 @keyframes shadowAnimation {
   0% {
-    transform: rotateX(75deg) scale(0.8);
+    /* transform: rotateX(75deg) scale(0.8); */
+    transform: scale(1.25);
   }
 
   100% {
-    transform: rotateX(75deg) scale(0.67);
+    /* transform: rotateX(75deg) scale(0.67); */
+    transform: scale(1);
   }
 }
 
@@ -1581,10 +1625,10 @@ footer {
     margin: 0;
   }
 
-  .product-page-content .product-visual img {
+  /* .product-page-content .product-visual img {
     height: 500px;
     margin-top: 4rem;
-  }
+  } */
 
   .product-page-content .product-description {
     text-align: center;
@@ -1650,9 +1694,9 @@ footer {
     margin: 0;
   }
 
-  .product-page-content .product-visual img {
+  /* .product-page-content .product-visual img {
     margin-bottom: 1rem;
-  }
+  } */
 }
 
 @media (max-width: 400px) {
@@ -1822,9 +1866,9 @@ footer {
 
 /* .similar-products-content .product-thumbnail {
   border: solid yellow;
-}
+} */
 
-.similar-products-content .product-thumbnail .product-shadow {
+/* .similar-products-content .product-thumbnail .product-shadow {
   background: radial-gradient(circle, red 0%, transparent 50%);
 
   border: solid blue;

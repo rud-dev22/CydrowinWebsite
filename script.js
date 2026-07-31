@@ -157,7 +157,7 @@ window.addEventListener("scroll", revealPassedElements, { passive: true });
 const foodLists = document.querySelectorAll(".food-list");
 const foodRevealItems = Array.from(document.querySelectorAll(".food-list .food"));
 const pendingFoodRevealItems = new Set();
-const foodRevealDelay = 420;
+const foodRevealDelay = 500;
 let foodRevealObserver = null;
 let foodRevealFrame = null;
 
