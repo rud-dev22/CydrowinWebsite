@@ -737,15 +737,33 @@ nav ul {
 }
 
 .pair-of-photos:nth-of-type(1) .described-photo:nth-child(2) {
-  --gallery-reveal-delay: 0.3s;
+  --gallery-reveal-delay: 1s;
 }
 
 .pair-of-photos:nth-of-type(2) .described-photo:nth-child(1) {
-  --gallery-reveal-delay: 0.6s;
+  --gallery-reveal-delay: 0.5s;
 }
 
 .pair-of-photos:nth-of-type(2) .described-photo:nth-child(2) {
-  --gallery-reveal-delay: 0.9s;
+  --gallery-reveal-delay: 1.5s;
+}
+
+@media (max-width: 1150px) {
+  .pair-of-photos:nth-of-type(1) .described-photo:nth-child(1) {
+  --gallery-reveal-delay: 0.5s;
+}
+
+.pair-of-photos:nth-of-type(1) .described-photo:nth-child(2) {
+  --gallery-reveal-delay: 0.5s;
+}
+
+.pair-of-photos:nth-of-type(2) .described-photo:nth-child(1) {
+  --gallery-reveal-delay: 0.5s;
+}
+
+.pair-of-photos:nth-of-type(2) .described-photo:nth-child(2) {
+  --gallery-reveal-delay: 0.5s;
+}
 }
 
 .described-photo.reveal-up.visible {
@@ -1341,7 +1359,7 @@ footer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--bg);
+  background: var(--bgDrk);
 }
 
 .product-page main {
@@ -1372,13 +1390,13 @@ footer {
   content: "";
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
   z-index: -1;
-  height: clamp(9rem, 12vw, 12rem);
+  height: calc(9rem + 2px);
   pointer-events: none;
   background: linear-gradient(to top,
-      var(--bgDrk) 0%,
+      var(--bgDrk) 2.5%,
       transparent 100%);
 }
 
@@ -1962,9 +1980,47 @@ input[type=number] {
   }
 }
 
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (max-width: 900px) {
+
+  .hero,
+  .heroShop {
+    --hero-parallax-y: 0px;
+    --hero-parallax-bleed: 0px;
+  }
+
+  .about {
+    --about-parallax-y: 0px;
+    --about-parallax-bleed: 0px;
+  }
+
+  .product-page main {
+    --product-parallax-y: 0px;
+    --product-parallax-bleed: 0px;
+  }
+
+  .hero-slide {
+    background-position: center 60%;
+  }
+
+  .heroShop-image {
+    background-position: center 50%;
+  }
+
+  .about-image {
+    background-position: 57% 30%;
+  }
+
+  .product-page main::before {
+    transform: none;
+    will-change: auto;
+  }
+}
+
 .similar-products {
   position: relative;
   isolation: isolate;
+  margin-top: -2px;
+  padding-top: 2px;
   background: var(--bgDrk);
 }
 

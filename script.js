@@ -1,3 +1,32 @@
+const parallaxDisabledQuery = window.matchMedia(
+    "(prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (max-width: 900px)"
+);
+
+function shouldUseParallax() {
+    return !parallaxDisabledQuery.matches;
+}
+
+function addMediaQueryListener(mediaQuery, listener) {
+    if (typeof mediaQuery.addEventListener === "function") {
+        mediaQuery.addEventListener("change", listener);
+    } else if (typeof mediaQuery.addListener === "function") {
+        mediaQuery.addListener(listener);
+    }
+}
+
+function createRafScheduler(callback) {
+    let frameId = null;
+
+    return function scheduleCallback() {
+        if (frameId !== null) return;
+
+        frameId = window.requestAnimationFrame(() => {
+            frameId = null;
+            callback();
+        });
+    };
+}
+
 // hero
 
 const pageHeroParallaxStrength = 0.120123456789;
@@ -31,6 +60,13 @@ pageHeroes.forEach(({ measure }) => {
 });
 
 function updatePageHeroParallax() {
+    if (!shouldUseParallax()) {
+        pageHeroes.forEach(({ element }) => {
+            element.style.removeProperty("--hero-parallax-y");
+        });
+        return;
+    }
+
     pageHeroes.forEach(({ element }) => {
         const rect = element.getBoundingClientRect();
         const offset = rect.top * pageHeroParallaxStrength;
@@ -79,9 +115,10 @@ function updatePageHeroes() {
     updatePageHeroTitleSize();
 }
 
+const schedulePageHeroes = createRafScheduler(updatePageHeroes);
+
 window.addEventListener("load", updatePageHeroes);
-window.addEventListener("resize", updatePageHeroes);
-window.addEventListener("scroll", updatePageHeroParallax, { passive: true });
+window.addEventListener("resize", schedulePageHeroes);
 
 if (document.fonts) {
     document.fonts.ready.then(updatePageHeroes);
@@ -95,6 +132,11 @@ const aboutParallaxLimit = 70;
 
 function updateAboutParallax() {
     if (!about) return;
+
+    if (!shouldUseParallax()) {
+        about.style.removeProperty("--about-parallax-y");
+        return;
+    }
 
     const rect = about.getBoundingClientRect();
     const offset = rect.top * aboutParallaxStrength;
@@ -112,17 +154,35 @@ const productParallaxLimit = 480;
 function updateProductParallax() {
     if (!productPageMain) return;
 
+    if (!shouldUseParallax()) {
+        productPageMain.style.removeProperty("--product-parallax-y");
+        return;
+    }
+
     const offset = Math.min(productParallaxLimit, window.scrollY * productParallaxStrength);
     productPageMain.style.setProperty("--product-parallax-y", `${offset.toFixed(2)}px`);
 }
 
-window.addEventListener("load", updateProductParallax);
-window.addEventListener("scroll", updateProductParallax, { passive: true });
+function updateParallaxEffects() {
+    updatePageHeroParallax();
+    updateAboutParallax();
+    updateProductParallax();
+}
+
+const scheduleParallaxEffects = createRafScheduler(updateParallaxEffects);
+
+function scheduleParallaxEffectsWhenEnabled() {
+    if (shouldUseParallax()) {
+        scheduleParallaxEffects();
+    }
+}
+
+window.addEventListener("load", updateParallaxEffects);
+window.addEventListener("resize", scheduleParallaxEffectsWhenEnabled);
+window.addEventListener("scroll", scheduleParallaxEffectsWhenEnabled, { passive: true });
+addMediaQueryListener(parallaxDisabledQuery, updateParallaxEffects);
 
 // gallery
-
-window.addEventListener("load", updateAboutParallax);
-window.addEventListener("scroll", updateAboutParallax);
 
 const revealElements = document.querySelectorAll(".reveal-up");
 let revealObserver = null;
@@ -165,8 +225,13 @@ if ("IntersectionObserver" in window) {
     revealElements.forEach(revealElement);
 }
 
+const scheduleRevealPassedElements = createRafScheduler(revealPassedElements);
+
 window.addEventListener("load", revealPassedElements);
-window.addEventListener("scroll", revealPassedElements, { passive: true });
+
+if (!("IntersectionObserver" in window)) {
+    window.addEventListener("scroll", scheduleRevealPassedElements, { passive: true });
+}
 
 // food recommendations
 
