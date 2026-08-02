@@ -157,7 +157,7 @@ window.addEventListener("scroll", revealPassedElements, { passive: true });
 const foodLists = document.querySelectorAll(".food-list");
 const foodRevealItems = Array.from(document.querySelectorAll(".food-list .food"));
 const pendingFoodRevealItems = new Set();
-const foodRevealDelay = 500;
+const foodRevealDelay = 440;
 let foodRevealObserver = null;
 let foodRevealFrame = null;
 
@@ -239,3 +239,18 @@ document.addEventListener('DOMContentLoaded', function () {
         form.reset();
     });
 });
+
+// counter
+
+const numberOfProducts = document.querySelector("input.number");
+numberOfProducts.value = 1;
+
+function increment() {
+    numberOfProducts.value = Number(numberOfProducts.value) + 1;
+}
+
+function decrement() {
+    if (Number(numberOfProducts.value) !== 0) {
+        numberOfProducts.value = Number(numberOfProducts.value) - 1;
+    }
+}

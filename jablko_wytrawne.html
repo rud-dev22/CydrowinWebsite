@@ -40,7 +40,7 @@
 
     <main>
         <section class="product-page-content">
-            <div class="product-main-informations">
+            <div class="product-informations">
                 <div class="product-visual">
                     <img src="assets/jablko_wytrawne.png">
                     <div class="product-shadow"></div>
@@ -52,9 +52,45 @@
                         Wino o&nbsp;pięknym słomkowym kolorze i&nbsp;bardzo oryginalnym, przyjemnym jabłecznym zapachu.
                         W&nbsp;bukiecie wyczuwalna jest nuta wanilii, przypraw oraz drzewa.
                     </p>
-                    <div class="purchase">
-                        <h3 class="price">40 zł</h3>
-                        <button><strong>Dodaj do koszyka</strong></button>
+                    <div class="product-specific-informations">
+                        <div class="product-parameters">
+                            <p class="text">
+                                <span style="font-weight: bold"><span style="margin-right: 0.5rem;">• </span>Pojemność:
+                                </span>0,75 l
+                                <br>
+                                <span style="font-weight: bold"><span style="margin-right: 0.5rem">• </span>Zawartość
+                                    alkoholu: </span>14%
+                                <br>
+                                <span style="font-weight: bold"><span style="margin-right: 0.5rem">• </span>Rocznik:
+                                </span>2025
+                            </p>
+                            <h3 class="price">Cena: <span style="font-weight: normal;">40 zł</span></h3>
+                        </div>
+                        <div class="purchase">
+                            <p class="text">
+                                Dostępność: <span style="font-weight: bold; color: green">w magazynie</span>
+                            </p>
+                            <div class="add-to-cart">
+                                <div class="counter">
+                                    <button class="operator decrement" onclick="decrement()">
+                                        <svg class="operator-icon" viewBox="0 0 32 32"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M2 16 L30 16" />
+                                        </svg>
+                                    </button>
+                                    <input class="number" type="number">
+                                    <button class="operator increment" onclick="increment()">
+                                        <svg class="operator-icon" viewBox="0 0 32 32"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M16 2 L16 30 M2 16 L30 16" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <button class="add-button"><strong>Dodaj do koszyka</strong></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -301,6 +337,9 @@
                         <div class="food-name">sałatek</div>
                     </div>
                 </div>
+            </div>
+            <div class="seeMore" style="margin-top: 0">
+                <a href="sklep.html">Powrót do sklepu</a>
             </div>
         </section>
     </main>
