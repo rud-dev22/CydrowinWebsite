@@ -102,23 +102,19 @@ nav ul {
 }
 
 .hero-image,
-.hero::before {
+.hero-symbol-cutout {
   position: absolute;
   top: calc(-1 * var(--hero-parallax-bleed));
   right: 0;
   bottom: calc(-1 * var(--hero-parallax-bleed));
   left: 0;
-  background: center calc(60% + var(--hero-parallax-y)) / cover no-repeat;
-  background-image: url("assets/pszczolka.jpg");
-  animation: image-show 25s ease-in-out infinite;
 }
 
 .hero-image {
   z-index: 0;
 }
 
-.hero::before {
-  content: "";
+.hero-symbol-cutout {
   z-index: 2;
   pointer-events: none;
   -webkit-mask-image: url("assets/symbol-kolor.png");
@@ -130,6 +126,41 @@ nav ul {
   mask-repeat: no-repeat;
   mask-position: center calc(37.5% + 22.5px);
   mask-size: 250px;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: center calc(60% + var(--hero-parallax-y)) / cover no-repeat;
+  animation: hero-slide-fade 25s ease-in-out infinite;
+  will-change: opacity;
+}
+
+.hero-slide--bee {
+  opacity: 1;
+  background-image: url("assets/pszczolka.jpg");
+  animation-delay: 0s;
+}
+
+.hero-slide--maker {
+  background-image: url("assets/szef.jpg");
+  animation-delay: -20s;
+}
+
+.hero-slide--apples {
+  background-image: url("assets/jablka.jpg");
+  animation-delay: -15s;
+}
+
+.hero-slide--barrel {
+  background-image: url("assets/beczka.jpg");
+  animation-delay: -10s;
+}
+
+.hero-slide--orchard {
+  background-image: url("assets/sad.jpg");
+  animation-delay: -5s;
 }
 
 .hero::after {
@@ -167,49 +198,19 @@ nav ul {
   color: var(--text);
 }
 
-@keyframes image-show {
-  0% {
-    background-image: url(assets/pszczolka.jpg);
+@keyframes hero-slide-fade {
+  0%,
+  16% {
+    opacity: 1;
   }
 
-  10% {
-    background-image: url(assets/pszczolka.jpg);
-  }
-
-  20% {
-    background-image: url(assets/szef.jpg);
-  }
-
-  30% {
-    background-image: url(assets/szef.jpg);
-  }
-
-  40% {
-    background-image: url(assets/jablka.jpg);
-  }
-
-  50% {
-    background-image: url(assets/jablka.jpg);
-  }
-
-  60% {
-    background-image: url(assets/beczka.jpg);
-  }
-
-  70% {
-    background-image: url(assets/beczka.jpg);
-  }
-
-  80% {
-    background-image: url(assets/sad.jpg);
-  }
-
-  90% {
-    background-image: url(assets/sad.jpg);
+  20%,
+  96% {
+    opacity: 0;
   }
 
   100% {
-    background-image: url(assets/pszczolka.jpg);
+    opacity: 1;
   }
 }
 
@@ -1541,7 +1542,7 @@ footer {
   font-weight: 700;
   color: var(--text);
 
-  margin: 3rem 0 0.75rem 0;
+  margin: 3rem 0 0.375rem 0;
 }
 
 .purchase {
