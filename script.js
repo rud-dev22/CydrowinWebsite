@@ -103,6 +103,22 @@ function updateAboutParallax() {
     about.style.setProperty("--about-parallax-y", `${clampedOffset.toFixed(2)}px`);
 }
 
+// product page
+
+const productPageMain = document.querySelector(".product-page main");
+const productParallaxStrength = 0.240123456789;
+const productParallaxLimit = 480;
+
+function updateProductParallax() {
+    if (!productPageMain) return;
+
+    const offset = Math.min(productParallaxLimit, window.scrollY * productParallaxStrength);
+    productPageMain.style.setProperty("--product-parallax-y", `${offset.toFixed(2)}px`);
+}
+
+window.addEventListener("load", updateProductParallax);
+window.addEventListener("scroll", updateProductParallax, { passive: true });
+
 // gallery
 
 window.addEventListener("load", updateAboutParallax);

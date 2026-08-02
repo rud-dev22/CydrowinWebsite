@@ -1344,13 +1344,41 @@ footer {
 }
 
 .product-page main {
+  --product-parallax-y: 0px;
+  --product-parallax-bleed: 160px;
+  position: relative;
+  isolation: isolate;
   flex: 1 0 auto;
+  overflow: hidden;
   padding: clamp(2rem, 5vw, 4rem);
+  background: var(--bg);
+}
+
+.product-page main::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--product-parallax-bleed)) 0;
+  z-index: -1;
   background-image: url("assets/aperitif.jpg");
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
-  background-attachment: fixed;
+  background-position: center;
+  transform: translateY(var(--product-parallax-y, 0px));
+  will-change: transform;
+}
+
+.product-page main::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  height: clamp(9rem, 12vw, 12rem);
+  pointer-events: none;
+  background: linear-gradient(to top,
+      var(--bgDrk) 0%,
+      transparent 100%);
 }
 
 .product-page footer {
@@ -1456,9 +1484,7 @@ footer {
   gap: clamp(1.6rem, 3vw, 2.4rem);
   min-width: 0;
   max-height: none;
-  margin: 0;
-
-  /* border: solid yellow; */
+  margin: 2rem 0 0 0;
 }
 
 .product-page-content .title {
@@ -1580,10 +1606,11 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox
+/* Firefox */
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
-}*/
+}
 
 .counter .operator {
   background: transparent;
@@ -1684,7 +1711,6 @@ input[type=number] {
 
   .product-page main {
     padding: clamp(1rem, 5vw, 2rem);
-    background-attachment: scroll;
   }
 
   .product-page-content {
@@ -1822,7 +1848,7 @@ input[type=number] {
 
 .recommendations {
   width: 100%;
-  margin: 0 0 2rem 0;
+  margin: 0;
 }
 
 .recommendations-title {
