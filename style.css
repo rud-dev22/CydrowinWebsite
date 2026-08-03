@@ -132,9 +132,10 @@ nav ul {
   position: absolute;
   inset: 0;
   opacity: 0;
-  background: center calc(60% + var(--hero-parallax-y)) / cover no-repeat;
+  background: center 60% / cover no-repeat;
+  transform: translate3d(0, var(--hero-parallax-y, 0px), 0);
   animation: hero-slide-fade 25s ease-in-out infinite;
-  will-change: opacity;
+  will-change: opacity, transform;
 }
 
 .hero-slide--bee {
@@ -199,6 +200,7 @@ nav ul {
 }
 
 @keyframes hero-slide-fade {
+
   0%,
   16% {
     opacity: 1;
@@ -532,7 +534,9 @@ nav ul {
   background-image: url("assets/szef3.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center calc(30% + var(--about-parallax-y, 0px));
+  background-position: center 30%;
+  transform: translate3d(0, var(--about-parallax-y, 0px), 0);
+  will-change: transform;
 }
 
 .about-content-frame {
@@ -603,7 +607,7 @@ nav ul {
   }
 
   .about-image {
-    background-position: 57% calc(30% + var(--about-parallax-y, 0px));
+    background-position: 57% 30%;
   }
 
   .about h1 {
@@ -750,20 +754,20 @@ nav ul {
 
 @media (max-width: 1150px) {
   .pair-of-photos:nth-of-type(1) .described-photo:nth-child(1) {
-  --gallery-reveal-delay: 0.5s;
-}
+    --gallery-reveal-delay: 0.5s;
+  }
 
-.pair-of-photos:nth-of-type(1) .described-photo:nth-child(2) {
-  --gallery-reveal-delay: 0.5s;
-}
+  .pair-of-photos:nth-of-type(1) .described-photo:nth-child(2) {
+    --gallery-reveal-delay: 0.5s;
+  }
 
-.pair-of-photos:nth-of-type(2) .described-photo:nth-child(1) {
-  --gallery-reveal-delay: 0.5s;
-}
+  .pair-of-photos:nth-of-type(2) .described-photo:nth-child(1) {
+    --gallery-reveal-delay: 0.5s;
+  }
 
-.pair-of-photos:nth-of-type(2) .described-photo:nth-child(2) {
-  --gallery-reveal-delay: 0.5s;
-}
+  .pair-of-photos:nth-of-type(2) .described-photo:nth-child(2) {
+    --gallery-reveal-delay: 0.5s;
+  }
 }
 
 .described-photo.reveal-up.visible {
@@ -1184,7 +1188,9 @@ footer {
   bottom: calc(-1 * var(--hero-parallax-bleed));
   left: 0;
   z-index: 0;
-  background: url("assets/regal.jpg") center calc(50% + var(--hero-parallax-y)) / cover no-repeat;
+  background: url("assets/regal.jpg") center 50% / cover no-repeat;
+  transform: translate3d(0, var(--hero-parallax-y, 0px), 0);
+  will-change: transform;
 }
 
 .heroShop::after {
@@ -1382,7 +1388,7 @@ footer {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  transform: translateY(var(--product-parallax-y, 0px));
+  transform: translate3d(0, var(--product-parallax-y, 0px), 0);
   will-change: transform;
 }
 
@@ -1412,7 +1418,7 @@ footer {
   box-sizing: border-box;
   width: min(100%, 1120px);
   row-gap: clamp(4.5rem, 8vw, 7rem);
-  margin-block: clamp(5rem, 10vw, 10rem) clamp(6rem, 12vw, 12rem);
+  margin-block: clamp(5rem, 10vw, 10rem) 20rem;
   margin-inline: auto;
   padding: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 7vw, 7rem);
 
@@ -1428,6 +1434,7 @@ footer {
   background: var(--bg);
   filter: blur(10px);
   transform: translateZ(0);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .product-page-content .product-visual {
@@ -1704,7 +1711,7 @@ input[type=number] {
 @media (max-width: 1300px) {
   .product-page-content {
     width: min(100%, 960px);
-    margin-block: clamp(5rem, 8vw, 7rem) clamp(6rem, 10vw, 9rem);
+    margin-block: clamp(5rem, 8vw, 7rem) 10rem;
     padding: clamp(3.5rem, 8vw, 5rem) clamp(2rem, 8vw, 5.5rem);
   }
 
@@ -1907,11 +1914,14 @@ input[type=number] {
 .food-list.food-list--revealing .food {
   opacity: 0;
   transform: translateY(calc(var(--food-base-y) + 1rem)) scale(0.96);
+  will-change: opacity, transform;
+}
+
+.food-list.food-list--reveal-ready .food {
   transition:
     opacity 0.65s ease,
     transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--food-reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 .food-list.food-list--revealing .food.food-visible {
@@ -1951,6 +1961,10 @@ input[type=number] {
   .recommendations {
     margin-top: 4rem;
   }
+
+  .recommendations-title {
+    margin-bottom: 2.2rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1961,6 +1975,10 @@ input[type=number] {
   .food--shrimp {
     --food-base-y: 0px;
     transform: translateY(var(--food-base-y));
+  }
+
+  .recommendations-title {
+    margin-bottom: 3rem;
   }
 }
 
@@ -1977,10 +1995,11 @@ input[type=number] {
     opacity: 1;
     transform: translateY(var(--food-base-y));
     transition: none;
+    will-change: auto;
   }
 }
 
-@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (max-width: 900px) {
+@media (prefers-reduced-motion: reduce) {
 
   .hero,
   .heroShop {
@@ -1998,18 +2017,13 @@ input[type=number] {
     --product-parallax-bleed: 0px;
   }
 
-  .hero-slide {
-    background-position: center 60%;
-  }
-
+  .hero-slide,
   .heroShop-image {
-    background-position: center 50%;
+    transform: none;
+    will-change: auto;
   }
 
-  .about-image {
-    background-position: 57% 30%;
-  }
-
+  .about-image,
   .product-page main::before {
     transform: none;
     will-change: auto;

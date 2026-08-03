@@ -1,5 +1,8 @@
 const parallaxDisabledQuery = window.matchMedia(
-    "(prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (max-width: 900px)"
+    "(prefers-reduced-motion: reduce)"
+);
+const compactParallaxQuery = window.matchMedia(
+    "(hover: none), (pointer: coarse), (max-width: 900px)"
 );
 
 function shouldUseParallax() {
@@ -31,6 +34,8 @@ function createRafScheduler(callback) {
 
 const pageHeroParallaxStrength = 0.120123456789;
 const pageHeroParallaxLimit = 70;
+const pageHeroCompactParallaxStrength = 0.08;
+const pageHeroCompactParallaxLimit = 46;
 const pageHeroes = [".hero", ".heroShop"]
     .map((selector) => {
         const element = document.querySelector(selector);
@@ -68,9 +73,15 @@ function updatePageHeroParallax() {
     }
 
     pageHeroes.forEach(({ element }) => {
+        const strength = compactParallaxQuery.matches
+            ? pageHeroCompactParallaxStrength
+            : pageHeroParallaxStrength;
+        const limit = compactParallaxQuery.matches
+            ? pageHeroCompactParallaxLimit
+            : pageHeroParallaxLimit;
         const rect = element.getBoundingClientRect();
-        const offset = rect.top * pageHeroParallaxStrength;
-        const clampedOffset = Math.max(-pageHeroParallaxLimit, Math.min(pageHeroParallaxLimit, offset));
+        const offset = rect.top * strength;
+        const clampedOffset = Math.max(-limit, Math.min(limit, offset));
 
         element.style.setProperty("--hero-parallax-y", `${clampedOffset.toFixed(2)}px`);
     });
@@ -129,6 +140,8 @@ if (document.fonts) {
 const about = document.querySelector(".about");
 const aboutParallaxStrength = 0.120123456789;
 const aboutParallaxLimit = 70;
+const aboutCompactParallaxStrength = 0.08;
+const aboutCompactParallaxLimit = 46;
 
 function updateAboutParallax() {
     if (!about) return;
@@ -138,9 +151,15 @@ function updateAboutParallax() {
         return;
     }
 
+    const strength = compactParallaxQuery.matches
+        ? aboutCompactParallaxStrength
+        : aboutParallaxStrength;
+    const limit = compactParallaxQuery.matches
+        ? aboutCompactParallaxLimit
+        : aboutParallaxLimit;
     const rect = about.getBoundingClientRect();
-    const offset = rect.top * aboutParallaxStrength;
-    const clampedOffset = Math.max(-aboutParallaxLimit, Math.min(aboutParallaxLimit, offset));
+    const offset = rect.top * strength;
+    const clampedOffset = Math.max(-limit, Math.min(limit, offset));
 
     about.style.setProperty("--about-parallax-y", `${clampedOffset.toFixed(2)}px`);
 }
@@ -150,6 +169,8 @@ function updateAboutParallax() {
 const productPageMain = document.querySelector(".product-page main");
 const productParallaxStrength = 0.240123456789;
 const productParallaxLimit = 480;
+const productCompactParallaxStrength = 0.12;
+const productCompactParallaxLimit = 140;
 
 function updateProductParallax() {
     if (!productPageMain) return;
@@ -159,7 +180,13 @@ function updateProductParallax() {
         return;
     }
 
-    const offset = Math.min(productParallaxLimit, window.scrollY * productParallaxStrength);
+    const strength = compactParallaxQuery.matches
+        ? productCompactParallaxStrength
+        : productParallaxStrength;
+    const limit = compactParallaxQuery.matches
+        ? productCompactParallaxLimit
+        : productParallaxLimit;
+    const offset = Math.min(limit, window.scrollY * strength);
     productPageMain.style.setProperty("--product-parallax-y", `${offset.toFixed(2)}px`);
 }
 
@@ -181,6 +208,7 @@ window.addEventListener("load", updateParallaxEffects);
 window.addEventListener("resize", scheduleParallaxEffectsWhenEnabled);
 window.addEventListener("scroll", scheduleParallaxEffectsWhenEnabled, { passive: true });
 addMediaQueryListener(parallaxDisabledQuery, updateParallaxEffects);
+addMediaQueryListener(compactParallaxQuery, updateParallaxEffects);
 
 // gallery
 
@@ -235,14 +263,22 @@ if (!("IntersectionObserver" in window)) {
 
 // food recommendations
 
-const foodLists = document.querySelectorAll(".food-list");
-const foodRevealItems = Array.from(document.querySelectorAll(".food-list .food"));
-const pendingFoodRevealItems = new Set();
+const foodLists = Array.from(document.querySelectorAll(".food-list"));
 const foodRevealDelay = 440;
-let foodRevealObserver = null;
+const foodRevealDuration = 650;
+const foodRevealRowTolerance = 8;
+const foodRevealStates = foodLists
+    .map((list) => ({
+        list,
+        items: Array.from(list.querySelectorAll(".food")),
+        isRevealing: false
+    }))
+    .filter(({ items }) => items.length > 0);
 let foodRevealFrame = null;
+let foodRevealObserver = null;
+let foodRevealReady = false;
 
-function revealFoodItems(elements) {
+function revealFoodItems(elements, shouldAnimate = false) {
     elements.forEach((element, index) => {
         element.style.setProperty("--food-reveal-delay", `${index * foodRevealDelay}ms`);
         element.classList.add("food-visible");
@@ -250,63 +286,134 @@ function revealFoodItems(elements) {
         if (foodRevealObserver) {
             foodRevealObserver.unobserve(element);
         }
+
+        if (!shouldAnimate) {
+            element.style.removeProperty("--food-reveal-delay");
+        }
     });
 }
 
-function compareFoodRevealOrder(firstElement, secondElement) {
-    return foodRevealItems.indexOf(firstElement) - foodRevealItems.indexOf(secondElement);
+function getNextFoodRevealRow(state) {
+    const firstHiddenIndex = state.items.findIndex((element) => !element.classList.contains("food-visible"));
+
+    if (firstHiddenIndex === -1) return [];
+
+    const firstHiddenItem = state.items[firstHiddenIndex];
+    const rowTop = firstHiddenItem.offsetTop;
+    const row = [];
+
+    for (let index = firstHiddenIndex; index < state.items.length; index += 1) {
+        const element = state.items[index];
+
+        if (Math.abs(element.offsetTop - rowTop) > foodRevealRowTolerance) {
+            break;
+        }
+
+        row.push(element);
+    }
+
+    return row;
 }
 
-function isFoodRevealInViewport(element) {
-    const rect = element.getBoundingClientRect();
+function getFoodRevealRowPosition(row) {
+    if (!row.length) return "complete";
+
+    const rects = row.map((element) => element.getBoundingClientRect());
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    const top = Math.min(...rects.map((rect) => rect.top));
+    const right = Math.max(...rects.map((rect) => rect.right));
+    const bottom = Math.max(...rects.map((rect) => rect.bottom));
+    const left = Math.min(...rects.map((rect) => rect.left));
 
-    return rect.bottom > 0
-        && rect.right > 0
-        && rect.top < viewportHeight
-        && rect.left < viewportWidth;
+    if (bottom <= 0) return "past";
+
+    return right > 0
+        && left < viewportWidth
+        && top < viewportHeight
+        ? "visible"
+        : "future";
 }
 
-function flushFoodRevealItems() {
-    foodRevealFrame = null;
+function revealFoodRow(state, row) {
+    state.isRevealing = true;
+    revealFoodItems(row, true);
 
-    const visibleItems = Array.from(pendingFoodRevealItems)
-        .filter((element) => !element.classList.contains("food-visible"))
-        .filter(isFoodRevealInViewport)
-        .sort(compareFoodRevealOrder);
+    const rowRevealTime = ((row.length - 1) * foodRevealDelay) + foodRevealDuration;
 
-    pendingFoodRevealItems.clear();
-    revealFoodItems(visibleItems);
+    window.setTimeout(() => {
+        state.isRevealing = false;
+        attemptFoodReveal(state);
+    }, rowRevealTime);
 }
 
-function queueFoodReveal(element) {
-    pendingFoodRevealItems.add(element);
+function attemptFoodReveal(state) {
+    if (state.isRevealing) return;
 
-    if (foodRevealFrame === null) {
-        foodRevealFrame = window.requestAnimationFrame(flushFoodRevealItems);
+    const nextRow = getNextFoodRevealRow(state);
+    const rowPosition = getFoodRevealRowPosition(nextRow);
+
+    if (rowPosition === "complete") return;
+
+    if (rowPosition === "past") {
+        revealFoodItems(nextRow, false);
+        attemptFoodReveal(state);
+        return;
     }
+
+    if (rowPosition !== "visible") return;
+
+    revealFoodRow(state, nextRow);
 }
 
-if (foodRevealItems.length) {
-    foodLists.forEach((list) => list.classList.add("food-list--revealing"));
+function flushFoodRevealAttempts() {
+    foodRevealFrame = null;
+    foodRevealStates.forEach(attemptFoodReveal);
+}
+
+function scheduleFoodRevealAttempt() {
+    if (!foodRevealReady) return;
+    if (foodRevealFrame !== null) return;
+
+    foodRevealFrame = window.requestAnimationFrame(flushFoodRevealAttempts);
+}
+
+if (foodRevealStates.length) {
+    foodRevealStates.forEach(({ list }) => {
+        list.classList.add("food-list--revealing");
+    });
 
     const prefersReducedFoodMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if ("IntersectionObserver" in window && !prefersReducedFoodMotion) {
-        foodRevealObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    queueFoodReveal(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2
-        });
-
-        foodRevealItems.forEach((element) => foodRevealObserver.observe(element));
+    if (prefersReducedFoodMotion) {
+        foodRevealStates.forEach(({ items }) => revealFoodItems(items, false));
     } else {
-        revealFoodItems(foodRevealItems);
+        if ("IntersectionObserver" in window) {
+            foodRevealObserver = new IntersectionObserver((entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                    scheduleFoodRevealAttempt();
+                }
+            }, {
+                threshold: 0.01
+            });
+
+            foodRevealStates.forEach(({ items }) => {
+                items.forEach((element) => foodRevealObserver.observe(element));
+            });
+        } else {
+            window.addEventListener("scroll", scheduleFoodRevealAttempt, { passive: true });
+        }
+
+        window.addEventListener("resize", scheduleFoodRevealAttempt);
+
+        window.requestAnimationFrame(() => {
+            foodRevealStates.forEach(({ list }) => {
+                list.classList.add("food-list--reveal-ready");
+            });
+
+            foodRevealReady = true;
+            scheduleFoodRevealAttempt();
+        });
     }
 }
 
