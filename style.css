@@ -1407,6 +1407,10 @@ footer {
       transparent 100%);
 }
 
+.product-page--aronia main::before {
+  background-image: url("assets/degustacja.jpg");
+}
+
 .product-page footer {
   flex: none;
 }
@@ -1433,9 +1437,9 @@ footer {
   z-index: -1;
   border-radius: inherit;
   background: var(--bg);
-  filter: blur(10px);
+  filter: blur(9px);
   transform: translateZ(0);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.24);
 }
 
 .product-page-content .product-visual {
@@ -1607,6 +1611,14 @@ footer {
 
 .purchase button:hover {
   background-color: var(--accentDrk);
+}
+
+.product-page--aronia .purchase .add-button {
+  background-color: var(--brand);
+}
+
+.product-page--aronia .purchase .add-button:hover {
+  background-color: var(--brandDrk);
 }
 
 .product-informations {
@@ -1951,6 +1963,16 @@ input[type=number] {
   font-style: italic;
   color: var(--accentDrk);
   overflow-wrap: break-word;
+}
+
+.product-page--aronia .recommendations {
+  color: var(--brand);
+}
+
+.product-page--aronia .recommendations-title,
+.product-page--aronia .food-image,
+.product-page--aronia .food-name {
+  color: inherit;
 }
 
 @media (max-width: 1300px) {
