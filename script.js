@@ -264,7 +264,7 @@ if (!("IntersectionObserver" in window)) {
 // food recommendations
 
 const foodLists = Array.from(document.querySelectorAll(".food-list"));
-const foodRevealDelay = 440;
+const foodRevealDelay = 560;
 const foodRevealDuration = 650;
 const foodRevealRowTolerance = 8;
 const foodRevealStates = foodLists

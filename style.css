@@ -132,7 +132,7 @@ nav ul {
   position: absolute;
   inset: 0;
   opacity: 0;
-  background: center 60% / cover no-repeat;
+  background: center var(--hero-slide-position-y, 60%) / cover no-repeat;
   transform: translate3d(0, var(--hero-parallax-y, 0px), 0);
   animation: hero-slide-fade 25s ease-in-out infinite;
   will-change: opacity, transform;
@@ -145,6 +145,7 @@ nav ul {
 }
 
 .hero-slide--maker {
+  --hero-slide-position-y: 34%;
   background-image: url("assets/szef.jpg");
   animation-delay: -20s;
 }
