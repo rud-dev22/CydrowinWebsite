@@ -264,8 +264,9 @@ if (!("IntersectionObserver" in window)) {
 // food recommendations
 
 const foodLists = Array.from(document.querySelectorAll(".food-list"));
-const foodRevealDelay = 560;
-const foodRevealDuration = 650;
+const foodRevealDelay = 300;
+const foodRevealDuration = 420;
+const foodRevealFinalItemExtraDelay = Math.max(0, foodRevealDuration - foodRevealDelay);
 const foodRevealRowTolerance = 8;
 const foodRevealStates = foodLists
     .map((list) => ({
@@ -278,9 +279,12 @@ let foodRevealFrame = null;
 let foodRevealObserver = null;
 let foodRevealReady = false;
 
-function revealFoodItems(elements, shouldAnimate = false) {
+function revealFoodItems(elements, shouldAnimate = false, finalItemExtraDelay = 0) {
     elements.forEach((element, index) => {
-        element.style.setProperty("--food-reveal-delay", `${index * foodRevealDelay}ms`);
+        const revealDelay = (index * foodRevealDelay)
+            + (index === elements.length - 1 ? finalItemExtraDelay : 0);
+
+        element.style.setProperty("--food-reveal-delay", `${revealDelay}ms`);
         element.classList.add("food-visible");
 
         if (foodRevealObserver) {
@@ -337,9 +341,14 @@ function getFoodRevealRowPosition(row) {
 
 function revealFoodRow(state, row) {
     state.isRevealing = true;
-    revealFoodItems(row, true);
+    const isFinalRow = row[row.length - 1] === state.items[state.items.length - 1];
+    const finalItemExtraDelay = isFinalRow ? foodRevealFinalItemExtraDelay : 0;
 
-    const rowRevealTime = ((row.length - 1) * foodRevealDelay) + foodRevealDuration;
+    revealFoodItems(row, true, finalItemExtraDelay);
+
+    const rowRevealTime = ((row.length - 1) * foodRevealDelay)
+        + finalItemExtraDelay
+        + foodRevealDuration;
 
     window.setTimeout(() => {
         state.isRevealing = false;

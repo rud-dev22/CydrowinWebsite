@@ -1,6 +1,7 @@
 :root {
   --brand: #892631;
   --brandDrk: #75212a;
+  --brandLgt: #964750;
   --bg: #fef9f3;
   --bgDrk: #fef0d6ff;
   --text: #515151;
@@ -1385,7 +1386,7 @@ footer {
   position: absolute;
   inset: calc(-1 * var(--product-parallax-bleed)) 0;
   z-index: -1;
-  background-image: url("assets/aperitif.jpg");
+  background-image: url("assets/aperitif.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -1408,7 +1409,7 @@ footer {
 }
 
 .product-page--aronia main::before {
-  background-image: url("assets/degustacja.jpg");
+  background-image: url("assets/degustacja.png");
 }
 
 .product-page footer {
@@ -1924,6 +1925,26 @@ input[type=number] {
   transform: translateY(var(--food-base-y));
 }
 
+.food--steak {
+  --food-base-y: 15%;
+  transform: translateY(var(--food-base-y));
+}
+
+.food--ripened-cheese {
+  --food-base-y: 15%;
+  transform: translateY(var(--food-base-y));
+}
+
+.food--mushrooms {
+  --food-base-y: 16%;
+  transform: translateY(var(--food-base-y));
+}
+
+.food--duck {
+  --food-base-y: 16%;
+  transform: translateY(var(--food-base-y));
+}
+
 .food-list.food-list--revealing .food {
   opacity: 0;
   transform: translateY(calc(var(--food-base-y) + 1rem)) scale(0.96);
@@ -1966,7 +1987,7 @@ input[type=number] {
 }
 
 .product-page--aronia .recommendations {
-  color: var(--brand);
+  color: var(--brandLgt);
 }
 
 .product-page--aronia .recommendations-title,
@@ -1995,7 +2016,7 @@ input[type=number] {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .food--shrimp {
+  .food--shrimp, .food--steak, .food--ripened-cheese, .food--mushrooms, .food--duck {
     --food-base-y: 0px;
     transform: translateY(var(--food-base-y));
   }
