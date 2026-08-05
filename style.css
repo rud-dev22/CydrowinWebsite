@@ -1935,7 +1935,7 @@ input[type=number] {
   transform: translateY(var(--food-base-y));
 }
 
-.food--mushrooms {
+.food--mushroom {
   --food-base-y: 16%;
   transform: translateY(var(--food-base-y));
 }
@@ -2016,7 +2016,7 @@ input[type=number] {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .food--shrimp, .food--steak, .food--ripened-cheese, .food--mushrooms, .food--duck {
+  .food--shrimp, .food--steak, .food--ripened-cheese, .food--mushroom, .food--duck {
     --food-base-y: 0px;
     transform: translateY(var(--food-base-y));
   }
