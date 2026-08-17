@@ -7,6 +7,8 @@
   --text: #515151;
   --accentDrk: #a8957b;
   --accent: #d4c1a3;
+  --mixed: #c27372;
+  --mixedDrk: #a85b5a;
   --muted: #8f8f8f;
   --container: 1100px;
 }
@@ -1416,6 +1418,10 @@ footer {
   background-image: url("assets/piknik.png");
 }
 
+.product-page--czerwonaPorzeczka main::before {
+  background-image: url("assets/kwiaty.jpg");
+}
+
 .product-page footer {
   flex: none;
 }
@@ -1624,6 +1630,14 @@ footer {
 
 .product-page--red .purchase .add-button:hover {
   background-color: var(--brandDrk);
+}
+
+.product-page--rose .purchase .add-button {
+  background-color: var(--mixed);
+}
+
+.product-page--rose .purchase .add-button:hover {
+  background-color: var(--mixedDrk);
 }
 
 .product-informations {
@@ -1954,6 +1968,16 @@ input[type=number] {
   transform: translateY(var(--food-base-y));
 }
 
+.food--light-salad {
+  --food-base-y: 16%;
+  transform: translateY(var(--food-base-y));
+}
+
+.food--chili {
+  --food-base-y: 24%;
+  transform: translateY(var(--food-base-y));
+}
+
 .food-list.food-list--revealing .food {
   opacity: 0;
   transform: translateY(calc(var(--food-base-y) + 1rem)) scale(0.96);
@@ -1999,9 +2023,19 @@ input[type=number] {
   color: var(--brandLgt);
 }
 
+.product-page--rose .recommendations {
+  color: var(--mixed);
+}
+
 .product-page--red .recommendations-title,
 .product-page--red .food-image,
 .product-page--red .food-name {
+  color: inherit;
+}
+
+.product-page--rose .recommendations-title,
+.product-page--rose .food-image,
+.product-page--rose .food-name {
   color: inherit;
 }
 
@@ -2018,6 +2052,10 @@ input[type=number] {
   .recommendations-title {
     margin-bottom: 2.2rem;
   }
+
+  .food--chili {
+    --food-base-y: 16%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -2025,7 +2063,14 @@ input[type=number] {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .food--shrimp, .food--steak, .food--ripened-cheese, .food--mushroom, .food--duck, .food--dessert {
+  .food--shrimp,
+  .food--steak,
+  .food--ripened-cheese,
+  .food--mushroom,
+  .food--duck,
+  .food--dessert,
+  .food--light-salad,
+  .food--chili {
     --food-base-y: 0px;
     transform: translateY(var(--food-base-y));
   }
