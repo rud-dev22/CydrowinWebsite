@@ -1936,51 +1936,44 @@ input[type=number] {
   width: 100%;
   margin: 0 0 2rem 0;
   text-align: center;
+  translate: 0 var(--food-base-y);
 }
 
 .food--shrimp {
   --food-base-y: 12.5%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--steak {
   --food-base-y: 15%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--ripened-cheese {
   --food-base-y: 15%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--mushroom {
   --food-base-y: 16%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--duck {
   --food-base-y: 16%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--dessert {
   --food-base-y: 18%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--light-salad {
   --food-base-y: 16%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food--chili {
   --food-base-y: 24%;
-  transform: translateY(var(--food-base-y));
 }
 
 .food-list.food-list--revealing .food {
   opacity: 0;
-  transform: translateY(calc(var(--food-base-y) + 1rem)) scale(0.96);
+  transform: translateY(1rem) scale(0.96);
   will-change: opacity, transform;
 }
 
@@ -1993,7 +1986,7 @@ input[type=number] {
 
 .food-list.food-list--revealing .food.food-visible {
   opacity: 1;
-  transform: translateY(var(--food-base-y)) scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .food-image {
@@ -2072,7 +2065,6 @@ input[type=number] {
   .food--light-salad,
   .food--chili {
     --food-base-y: 0px;
-    transform: translateY(var(--food-base-y));
   }
 
   .recommendations-title {
@@ -2091,7 +2083,7 @@ input[type=number] {
   .food-list.food-list--revealing .food,
   .food-list.food-list--revealing .food.food-visible {
     opacity: 1;
-    transform: translateY(var(--food-base-y));
+    transform: none;
     transition: none;
     will-change: auto;
   }
