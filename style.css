@@ -1422,6 +1422,10 @@ footer {
   background-image: url("assets/kwiaty.jpg");
 }
 
+.product-page--sliwka main::before {
+  background-image: url("assets/sliwa.jpg")
+}
+
 .product-page footer {
   flex: none;
 }
@@ -1969,6 +1973,10 @@ input[type=number] {
 
 .food--chili {
   --food-base-y: 24%;
+}
+
+.food--dessert {
+  --food-base-y: 13%;
 }
 
 .food-list.food-list--revealing .food {
