@@ -1423,7 +1423,7 @@ footer {
 }
 
 .product-page--sliwka main::before {
-  background-image: url("assets/sliwa.jpg")
+  background-image: url("assets/sliwa.png");
 }
 
 .product-page footer {
