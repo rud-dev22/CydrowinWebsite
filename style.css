@@ -1979,6 +1979,10 @@ input[type=number] {
   --food-base-y: 13%;
 }
 
+.food--chocolate {
+  --food-base-y: 16.25%;
+}
+
 .food-list.food-list--revealing .food {
   opacity: 0;
   transform: translateY(1rem) scale(0.96);
@@ -2071,7 +2075,8 @@ input[type=number] {
   .food--duck,
   .food--dessert,
   .food--light-salad,
-  .food--chili {
+  .food--chili,
+  .food--chocolate {
     --food-base-y: 0px;
   }
 
