@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1588" height="1256" viewBox="0 0 1588 1256" role="img" aria-labelledby="title">
+  <title id="title">Parujące ciasto</title>
+  <defs>
+    <path id="para" d="M717 116 C709 129 703 137 703 153 C703 180 721 183 721 208 C721 234 703 238 703 265 C703 291 721 294 721 320 C721 332 717 340 712 348"/>
+  </defs>
+  <g fill="none" stroke="#000" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+    <use href="#para"/>
+    <use href="#para" transform="translate(64 0)"/>
+    <use href="#para" transform="translate(128 0)"/>
+    <path d="M305 890 L326 987 C335 1028 366 1055 410 1055 H1167 C1211 1055 1243 1028 1252 987 L1274 890"/>
+    <path d="M339 687
+      C426 523 598 419 788 419
+      C978 419 1149 523 1236 687
+      C1303 670 1367 718 1367 787
+      C1367 845 1322 890 1263 890
+      C1220 890 1184 865 1168 827
+      C1152 866 1117 890 1073 890
+      C1029 890 994 866 978 827
+      C962 866 927 890 883 890
+      C839 890 804 866 788 827
+      C772 866 737 890 693 890
+      C649 890 613 866 597 827
+      C581 866 546 890 502 890
+      C458 890 423 866 406 827
+      C390 865 355 890 312 890
+      C254 890 209 845 209 787
+      C209 718 272 670 339 687 Z"/>
+    <path stroke-width="20" d="M706 494 L608 599 M788 494 V606 M869 494 L967 599"/>
+  </g>
+</svg>
