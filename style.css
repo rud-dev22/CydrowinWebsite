@@ -1426,6 +1426,10 @@ footer {
   background-image: url("assets/sliwa.png");
 }
 
+.product-page--wieloowocowe main::before {
+  background-image: url("assets/owoce.png");
+}
+
 .product-page footer {
   flex: none;
 }
@@ -1953,6 +1957,14 @@ input[type=number] {
 
 .food--ripened-cheese {
   --food-base-y: 15%;
+}
+
+.food-image .ripened-cheese {
+  translate: 0 5px;
+}
+
+.food-image .pasta {
+  translate: 0 9px;
 }
 
 .food--mushroom {
