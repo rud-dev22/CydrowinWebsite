@@ -1979,6 +1979,11 @@ input[type=number] {
   translate: 0 6px;
 }
 
+.food-image .apple-pie {
+  object-fit: contain;
+  translate: 0 5px;
+}
+
 .food--mushroom {
   --food-base-y: 16%;
 }
@@ -2044,7 +2049,8 @@ input[type=number] {
   height: clamp(4.25rem, 11vw, 6rem);
 }
 
-.food-image svg {
+.food-image svg,
+.food-image img {
   max-width: min(100%, 5rem);
   max-height: 100%;
   height: auto;
