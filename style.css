@@ -1959,12 +1959,24 @@ input[type=number] {
   --food-base-y: 15%;
 }
 
+.food-image .salad {
+  translate: 0 5px;
+}
+
 .food-image .ripened-cheese {
   translate: 0 5px;
 }
 
 .food-image .pasta {
   translate: 0 9px;
+}
+
+.food-image .blue-cheese {
+  translate: 0 9px;
+}
+
+.food--tartelette .food-image svg {
+  translate: 0 6px;
 }
 
 .food--mushroom {
@@ -1979,7 +1991,7 @@ input[type=number] {
   --food-base-y: 18%;
 }
 
-.food--light-salad {
+.food--salad {
   --food-base-y: 16%;
 }
 
@@ -1995,8 +2007,16 @@ input[type=number] {
   --food-base-y: 16.25%;
 }
 
-.food--cake {
+.food--pie {
   --food-base-y: -2.25%;
+}
+
+.food--tartelette {
+  --food-base-y: 15%;
+}
+
+.food--blue-cheese {
+  --food-base-y: 15%;
 }
 
 .food-list.food-list--revealing .food {
@@ -2028,6 +2048,15 @@ input[type=number] {
   max-width: min(100%, 5rem);
   max-height: 100%;
   height: auto;
+}
+
+.food-image svg :is(path, rect, line, circle, ellipse, polyline, polygon) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .food-name {
@@ -2090,10 +2119,12 @@ input[type=number] {
   .food--mushroom,
   .food--duck,
   .food--dessert,
-  .food--light-salad,
+  .food--salad,
   .food--chili,
   .food--chocolate,
-  .food--cake {
+  .food--pie,
+  .food--tartelette,
+  .food--blue-cheese {
     --food-base-y: 0px;
   }
 
