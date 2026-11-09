@@ -1192,9 +1192,15 @@ footer {
   bottom: calc(-1 * var(--hero-parallax-bleed));
   left: 0;
   z-index: 0;
-  background: url("assets/regal.jpg") center 50% / cover no-repeat;
+  background: url("assets/sklep-pakowanie-win.jpg") center / cover no-repeat;
   transform: translate3d(0, var(--hero-parallax-y, 0px), 0);
   will-change: transform;
+}
+
+@media (max-width: 600px) {
+  .heroShop-image {
+    background-position: 96% center;
+  }
 }
 
 .heroShop::after {
@@ -1203,12 +1209,7 @@ footer {
   inset: 0 0 -3px;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to bottom,
-      rgba(254, 249, 243, 0) 0%,
-      rgba(254, 249, 243, 0.10) 38%,
-      rgba(254, 249, 243, 0.76) 78%,
-      var(--bg) calc(100% - 12px),
-      var(--bg) 100%);
+  background: linear-gradient(to bottom, transparent 62%, var(--bg) calc(100% - 12px));
 }
 
 .heroShop h1 {
@@ -1388,7 +1389,7 @@ footer {
   position: absolute;
   inset: calc(-1 * var(--product-parallax-bleed)) 0;
   z-index: -1;
-  background-image: url("assets/aperitif.png");
+  background-image: url("assets/aperitif-hd.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -1411,11 +1412,11 @@ footer {
 }
 
 .product-page--aronia main::before {
-  background-image: url("assets/degustacja.png");
+  background-image: url("assets/degustacja-hd.jpg");
 }
 
 .product-page--borowka main::before {
-  background-image: url("assets/piknik.png");
+  background-image: url("assets/piknik-borowki-hd.jpg");
 }
 
 .product-page--czerwonaPorzeczka main::before {
@@ -1423,11 +1424,11 @@ footer {
 }
 
 .product-page--sliwka main::before {
-  background-image: url("assets/sliwa.png");
+  background-image: url("assets/sliwa-hd.jpg");
 }
 
 .product-page--wieloowocowe main::before {
-  background-image: url("assets/owoce.png");
+  background-image: url("assets/owoce.jpg");
 }
 
 .product-page footer {
